@@ -1,6 +1,6 @@
 # CombineExtensions
 
-### A collection of helpful publishers for Combine.
+### A collection of Combine publishers.
 
 * `weakAssign`
 * `UIControl`
