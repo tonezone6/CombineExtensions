@@ -2,6 +2,6 @@
 
 ### A collection of helpful publishers for Combine.
 
-* WeakAssign
-* UIControl
-* UICollectionViewDiffableDataSource
+* `weakAssign`
+* `UIControl`
+* `UICollectionViewDiffableDataSource`
