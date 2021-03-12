@@ -1,3 +1,3 @@
 # CombineExtensions
 
-A description of this package.
+### A collection of helpful publishers for Combine.
