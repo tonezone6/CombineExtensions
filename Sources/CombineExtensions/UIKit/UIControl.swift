@@ -7,37 +7,7 @@ import UIKit
 
 /**
  A UIControl publisher extending UIControl
- inspired by John Sundell
- https://www.swiftbysundell.com/articles/building-custom-combine-publishers-in-swift/ */
-
-// MARK: Event publisher.
-
-extension UIControl {
-    
-    public struct EventPublisher: Publisher {
-        public typealias Output = Void
-        public typealias Failure = Never
-
-        fileprivate var control: UIControl
-        fileprivate var event: Event
-
-        // Combine will call this method on our publisher whenever
-        // a new object started observing it. Within this method,
-        // we'll need to create a subscription instance and
-        // attach it to the new subscriber:
-        public func receive<S: Subscriber>(subscriber: S) where S.Input == Output, S.Failure == Failure {
-            // Creating our custom subscription instance:
-            let subscription = EventSubscription<S>()
-            subscription.target = subscriber
-            
-            // Attaching our subscription to the subscriber:
-            subscriber.receive(subscription: subscription)
-
-            // Connecting our subscription to the control that's being observed:
-            control.addTarget(subscription, action: #selector(subscription.trigger), for: event)
-        }
-    }
-}
+ inspired by John Sundell */
 
 // MARK: Event subscription.
 
@@ -64,6 +34,35 @@ extension UIControl {
             // UIControl instance, we'll simply pass Void to our
             // target to emit that event:
             _ = target?.receive(())
+        }
+    }
+}
+
+// MARK: Event publisher.
+
+extension UIControl {
+    
+    public struct EventPublisher: Publisher {
+        public typealias Output = Void
+        public typealias Failure = Never
+
+        fileprivate var control: UIControl
+        fileprivate var event: Event
+
+        // Combine will call this method on our publisher whenever
+        // a new object started observing it. Within this method,
+        // we'll need to create a subscription instance and
+        // attach it to the new subscriber:
+        public func receive<S: Subscriber>(subscriber: S) where S.Input == Output, S.Failure == Failure {
+            // Creating our custom subscription instance:
+            let subscription = EventSubscription<S>()
+            subscription.target = subscriber
+            
+            // Attaching our subscription to the subscriber:
+            subscriber.receive(subscription: subscription)
+
+            // Connecting our subscription to the control that's being observed:
+            control.addTarget(subscription, action: #selector(subscription.trigger), for: event)
         }
     }
 }

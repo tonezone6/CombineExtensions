@@ -1,5 +1,5 @@
 
 struct CombineExtensions {
-    var text = "Hello, World!"
+    let text = "Hello world!"
 }
 

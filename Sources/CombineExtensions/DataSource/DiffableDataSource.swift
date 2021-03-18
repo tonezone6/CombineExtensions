@@ -1,5 +1,5 @@
 //
-//  Publisher-CollectionViewDiffableDataSource.swif
+//  CollectionViewDiffableDataSource.swif
 //
 
 import Combine

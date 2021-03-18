@@ -1,5 +1,5 @@
 //
-//  Publisher-WeakAssign.swift
+//  WeakAssign.swift
 //
 
 import Combine
