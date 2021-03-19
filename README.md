@@ -1,7 +1,22 @@
 # CombineExtensions
 
-### A collection of Combine publishers.
+A collection of Combine publishers.
 
+### Operators:
+* `unwrap`
 * `weakAssign`
+* `tryDecodeFailure`
+
+### UIKit
 * `UIControl`
-* `UICollectionViewDiffableDataSource`
+
+### Data source
+* `assign(to:)`
+
+```swift
+viewModel.$cards.assign(
+    to: collectionView,
+    cellProvider: collectionView.cardCellProvider,
+    supplementaryViewProvider: collectionView.cardsHeaderProvider
+).store(in: &subscriptions)
+```
