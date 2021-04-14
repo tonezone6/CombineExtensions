@@ -3,9 +3,12 @@
 A collection of Combine publishers.
 
 ### Operators:
-* `unwrap`
+* `convertToResult`
+* `convertToLoadingState`
+* `decode` using default arguments
+* `decodeFailure`
 * `weakAssign`
-* `tryDecodeFailure`
+* `unwrap`
 
 ### UIKit
 * `UIControl`
