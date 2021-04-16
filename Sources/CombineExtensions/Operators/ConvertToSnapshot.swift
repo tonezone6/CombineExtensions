@@ -7,7 +7,7 @@
 
 import Combine
 
-public extension Publisher {
+public extension Publisher where Failure == Never {
 
     func convertToSnapshot<S: Section>() -> AnyPublisher<Snapshot<S>, Failure>
     where Output == [S] {
