@@ -16,7 +16,6 @@ extension NWPathMonitor {
     private class Subscription<S: Subscriber>: Combine.Subscription where S.Input == NWPath {
         let subscriber: S
         let monitor: NWPathMonitor
-        let queue = DispatchQueue.global(qos: .background)
         
         private var started = false
         
@@ -34,7 +33,7 @@ extension NWPathMonitor {
             monitor.pathUpdateHandler = { [unowned self] path in
                 _ = subscriber.receive(path)
             }
-            monitor.start(queue: queue)
+            monitor.start(queue: .main)
         }
         
         func cancel() {
