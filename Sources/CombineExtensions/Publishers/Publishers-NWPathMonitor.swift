@@ -10,20 +10,19 @@ import Network
 
 extension NWPathMonitor {
     public var publisher: NWPathMonitor.Publisher {
-        Publisher(monitor: self, queue: DispatchQueue.global(qos: .background))
+        Publisher(monitor: self)
     }
     
     private class Subscription<S: Subscriber>: Combine.Subscription where S.Input == NWPath {
         let subscriber: S
         let monitor: NWPathMonitor
-        let queue: DispatchQueue
+        let queue = DispatchQueue.global(qos: .background)
         
         private var started = false
         
-        init(subscriber: S, monitor: NWPathMonitor, queue: DispatchQueue) {
+        init(subscriber: S, monitor: NWPathMonitor) {
             self.subscriber = subscriber
             self.monitor = monitor
-            self.queue = queue
         }
 
         /// This subscription only supports
@@ -48,10 +47,9 @@ extension NWPathMonitor {
         public typealias Failure = Never
         
         let monitor: NWPathMonitor
-        let queue: DispatchQueue
         
         public func receive<S>(subscriber: S) where S: Subscriber, Self.Failure == S.Failure, Self.Output == S.Input {
-            let subscription = Subscription(subscriber: subscriber, monitor: monitor, queue: queue)
+            let subscription = Subscription(subscriber: subscriber, monitor: monitor)
             subscriber.receive(subscription: subscription)
         }
     }
