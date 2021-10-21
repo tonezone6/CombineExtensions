@@ -1,13 +1,18 @@
 # CombineExtensions
 
-A collection of Combine publishers.
+A collection of Combine operators:
 
-### Operators:
-* `convertToLoadingState`
-* `convertToResult`
-* `tryDecodeFailure`
-* `unwrap`
-* `weakAssign`
+### Handle events:
+`onReceive(_ handler:)`, `onComplete(_ handler:)`
 
-### UIKit
-* `UIControl` publisher.
+### Catch:
+`catch(assignTo:on:replaceWith:)`
+
+### Assign both result and error:
+`assign(to:and:on:)`
+
+### Custom error types:
+`tryMap(failure:)`
+
+### Converts:
+`convertToResult`
