@@ -3,9 +3,9 @@ import Combine
 
 extension Publisher {
     
-    public func weakAssign<A: AnyObject>(
+    public func assign<A: AnyObject>(
         to keyPath: ReferenceWritableKeyPath<A, Output>,
-        on object: A
+        onWeak object: A
     ) -> AnyCancellable where Failure == Never {
     
         self.sink { [weak object] value in
@@ -15,8 +15,8 @@ extension Publisher {
     
     public func assign<A>(
         to result: ReferenceWritableKeyPath<A, Output>,
-        and failure: ReferenceWritableKeyPath<A, Failure?>,
-        on object: A
+        failure: ReferenceWritableKeyPath<A, Failure?>,
+        onWeak object: A
     ) -> AnyCancellable where A: AnyObject {
 
         self.sink(

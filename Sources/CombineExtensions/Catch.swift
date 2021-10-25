@@ -4,8 +4,8 @@ import Combine
 extension Publisher {
     
     public func `catch`<A, P>(
-        assignTo keyPath: ReferenceWritableKeyPath<A, Failure?>,
-        on object: A,
+        to keyPath: ReferenceWritableKeyPath<A, Failure?>,
+        onWeak object: A,
         replaceWith placeholder: P
     ) -> Publishers.Catch<Self, AnyPublisher<P, Never>> where A: AnyObject, P == Output {
         
