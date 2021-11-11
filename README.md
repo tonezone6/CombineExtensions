@@ -3,15 +3,15 @@
 A collection of Combine operators:
 
 ### Handle events:
-`onReceive(_ handler:)`, `onComplete(_ handler:)`
+`onSubscribe(perform:)`, `onReceive(perform:)`, `onComplete(perform:)`
 
-### Catch:
-`catch(assignTo:on:replaceWith:)`
+### Catch error:
+`catch(to:onWeak:replaceWith:)`
 
-### Assign both result and error:
-`assign(to:and:on:)`
+### Assign result:
+`assign(to:onWeak:)`
 
-### Custom error types:
+### Custom failure:
 `tryMap(failure:)`
 
 ### Converts:

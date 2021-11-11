@@ -4,13 +4,13 @@ import Foundation
 
 extension Publisher {
     
-    public func tryMap<E>(
-        failure: E.Type,
+    public func tryMap<F>(
+        failure: F.Type,
         decoder: JSONDecoder = .init()
-    ) -> Publishers.TryMap<Self, Data> where E: Error, E: Decodable, Output == Data {
+    ) -> Publishers.TryMap<Self, Data> where F: Error, F: Decodable, Output == Data {
         
         self.tryMap { data in
-            if let error = try? decoder.decode(E.self, from: data) {
+            if let error = try? decoder.decode(F.self, from: data) {
                 throw error
             } else {
                 return data
