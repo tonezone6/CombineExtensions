@@ -1,18 +1,18 @@
 # CombineExtensions
 
-A collection of Combine operators:
+A collection of Swift Combine operators:
 
 ### Handle events:
 `onSubscribe(perform:)`, `onReceive(perform:)`, `onComplete(perform:)`
+
+### Map custom failure:
+`tryMap(failure:)`
 
 ### Catch error:
 `catch(to:onWeak:replaceWith:)`
 
 ### Assign result:
 `assign(to:onWeak:)`
-
-### Custom failure:
-`tryMap(failure:)`
 
 ### Converts:
 `convertToResult`
