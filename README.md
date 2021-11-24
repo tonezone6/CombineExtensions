@@ -18,7 +18,7 @@ A collection of Swift Combine operators:
 `convertToResult`
 
 
-### without extensions:
+without extensions
 
 ```swift
 func fetch() {
@@ -45,7 +45,7 @@ func fetch() {
 }
 ```
 
-### with extensions:
+with extensions
 
 ```swift
 func fetch() {
