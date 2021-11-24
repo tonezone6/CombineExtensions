@@ -1,4 +1,4 @@
-# CombineExtensions
+# Combine extensions
 
 A collection of Swift Combine operators:
 
@@ -18,7 +18,7 @@ A collection of Swift Combine operators:
 `convertToResult`
 
 
-### Example without extensions
+### without extensions:
 
 ```swift
 func fetch() {
@@ -45,8 +45,7 @@ func fetch() {
 }
 ```
 
-
-### Example with extensions
+### with extensions:
 
 ```swift
 func fetch() {
@@ -65,8 +64,3 @@ func fetch() {
         .assign(to: &$users)
 }
 ```
-
-
-
-
-       
