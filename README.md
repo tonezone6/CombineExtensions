@@ -18,9 +18,9 @@ A collection of Swift Combine operators:
 `convertToResult`
 
 
-Without extensions
+### Example without extensions
 
-```
+```swift
 func fetch() {
     (1...6).publisher
         .map { "https://api.com/users/\($0)" }
@@ -45,9 +45,10 @@ func fetch() {
 }
 ```
 
-With extensions
 
-```
+### Example with extensions
+
+```swift
 func fetch() {
     (1...6).publisher
         .map { "https://api.com/users/\($0)" }
