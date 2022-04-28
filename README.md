@@ -2,65 +2,30 @@
 
 A collection of Swift Combine operators:
 
-### Handle events:
-`onSubscribe(perform:)`, `onReceive(perform:)`, `onComplete(perform:)`
+### Basic operators for updating progress, catch errors and assign results. The result is weakly capturing self in order to avoid retain cycles.
+`update(loading:on)`
+`catch(to:on:replaceWith:)`
+`assign(to:on:)`
 
-### Map custom failure:
+### Other
 `tryMap(failure:)`
-
-### Catch error:
-`catch(to:onWeak:replaceWith:)`
-
-### Assign result:
-`assign(to:onWeak:)`
-
-### Converts:
 `convertToResult`
 
-
-without extensions
-
-```swift
-func fetch() {
-    (1...6).publisher
-        .map { "https://api.com/users/\($0)" }
-        .compactMap(URL.init)
-        .handleEvents(receiveSubscription: { [weak self] _ in
-            self?.loading = true
-        })
-        .flatMap(URLSession.shared.dataTaskPublisher)
-        .map(\.data)
-        .decode(type: User.self, decoder: JSONDecoder())
-        .collect()
-        .receive(on: DispatchQueue.main)
-        .mapError(\.apiError)
-        .catch { [weak self] error -> AnyPublisher<[User], Never> in
-            self?.error = error
-            return Just([]).eraseToAnyPublisher()
-        }
-        .handleEvents(receiveCompletion: { [weak self] _ in
-            self?.loading = false
-        })
-        .assign(to: &$users)
-}
-```
-
-with extensions
+Example
 
 ```swift
-func fetch() {
+func fetchUsers() {
     (1...6).publisher
-        .map { "https://api.com/users/\($0)" }
+        .map { id in ".../users/\(id)" }
         .compactMap(URL.init)
-        .onSubscribe { [weak self] in self?.loading = true }
-        .flatMap(URLSession.shared.dataTaskPublisher)
+        .update(loading: \.loading, on: self)
+        .flatMap(session.dataTaskPublisher)
         .map(\.data)
-        .decode(type: User.self, decoder: JSONDecoder())
+        .decode(type: User.self, decoder: JSONDecoder.init)
         .collect()
-        .receive(on: DispatchQueue.main)
-        .mapError(\.apiError)
-        .catch(to: \.error, onWeak: self, replaceWith: [])
-        .onComplete { [weak self] in self?.loading = false }
+        .receive(on: RunLoop.main)
+        .mapError(ApiError.init)
+        .catch(to: \.error, on: self, replaceWith: [])
         .assign(to: &$users)
 }
 ```
