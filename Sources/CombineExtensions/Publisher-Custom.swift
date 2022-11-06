@@ -6,7 +6,7 @@ extension Publisher {
     
     public func update<T: AnyObject>(
         loading keyPath: ReferenceWritableKeyPath<T, Bool>,
-        on object: T
+        onWeak object: T
     ) -> Publishers.HandleEvents<Self> {
     
         self.handleEvents(receiveSubscription: { [weak object] _ in
@@ -18,7 +18,7 @@ extension Publisher {
     
     public func `catch`<T, P>(
         to keyPath: ReferenceWritableKeyPath<T, Failure?>,
-        on object: T,
+        onWeak object: T,
         replaceWith placeholder: P
     ) -> Publishers.Catch<Self, AnyPublisher<P, Never>> where T: AnyObject, P == Output {
         
@@ -30,16 +30,26 @@ extension Publisher {
     
     public func assign<T: AnyObject>(
         to keyPath: ReferenceWritableKeyPath<T, Output>,
-        on object: T
+        onWeak object: T
     ) -> AnyCancellable where Failure == Never {
     
         self.sink { [weak object] value in
             object?[keyPath: keyPath] = value
         }
     }
-}
-
-extension Publisher {
+    
+    public func sink(
+        receiveError: @escaping (Failure) -> Void,
+        receiveValue: @escaping (Output) -> Void
+    ) -> AnyCancellable {
+        self.sink(receiveCompletion: { completion in
+            if case let .failure(error) = completion {
+                receiveError(error)
+            }
+        }, receiveValue: { value in
+            receiveValue(value)
+        })
+    }
     
     public func convertToResult() -> AnyPublisher<Result<Output, Failure>, Never> {
         self.map(Result.success)
